@@ -26,9 +26,9 @@ interface CandidateWithScore extends Candidate {
 }
 
 const colorThemes = [
-  'from-yellow-400 to-orange-500',
-  'from-orange-400 to-pink-500',
-  'from-cyan-400 to-teal-500',
+  'from-purple-500 to-purple-700',
+  'from-cyan-500 to-teal-600',
+  'from-blue-500 to-blue-700',
 ];
 
 function App() {
@@ -518,17 +518,27 @@ function App() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <p className="text-gray-600 text-lg">Loading...</p>
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">
+        <p className="text-gray-300 text-lg">Loading...</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-8">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-12 gap-4">
-          <h1 className="text-4xl font-bold text-gray-900">Candidate Scoreboard</h1>
+        <div className="mb-12">
+          <div className="flex items-center gap-6 mb-8">
+            <img
+              src="/image.png"
+              alt="Mr. Talent Logo"
+              className="h-32 w-auto"
+            />
+            <div>
+              <h1 className="text-5xl font-bold text-white tracking-wide">SCOREBOARD</h1>
+              <p className="text-cyan-300 text-base mt-2 uppercase tracking-widest">Season 02</p>
+            </div>
+          </div>
 
           <div className="flex flex-wrap gap-2 items-center">
             <button
@@ -538,11 +548,11 @@ function App() {
               }}
               className={`px-6 py-2 rounded-lg font-medium transition-all ${
                 showGrandTotal
-                  ? 'bg-gray-900 text-white shadow-lg'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                  ? 'bg-purple-600 text-white shadow-lg shadow-purple-500/50'
+                  : 'bg-slate-700 text-gray-300 hover:bg-slate-600'
               }`}
             >
-              Grand Total
+              TOTAL
             </button>
             {rounds.map((round) => (
               <div key={round.id} className="relative group">
@@ -551,10 +561,10 @@ function App() {
                     setActiveRound(round.id);
                     setShowGrandTotal(false);
                   }}
-                  className={`px-6 py-2 rounded-lg font-medium transition-all ${
+                  className={`px-6 py-2 rounded-lg font-medium transition-all uppercase ${
                     activeRound === round.id && !showGrandTotal
-                      ? 'bg-gray-900 text-white shadow-lg'
-                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                      ? 'bg-purple-600 text-white shadow-lg shadow-purple-500/50'
+                      : 'bg-slate-700 text-gray-300 hover:bg-slate-600'
                   }`}
                 >
                   {round.name}
@@ -573,7 +583,7 @@ function App() {
             {!editingRound ? (
               <button
                 onClick={() => setEditingRound(true)}
-                className="px-3 py-2 bg-white text-gray-900 rounded-lg text-sm font-medium shadow hover:shadow-md transition-all flex items-center gap-1"
+                className="px-3 py-2 bg-slate-700 text-gray-300 rounded-lg text-sm font-medium hover:bg-slate-600 transition-all flex items-center gap-1"
               >
                 <Plus className="w-3 h-3" />
                 Add Round
@@ -585,12 +595,12 @@ function App() {
                   value={newRoundName}
                   onChange={(e) => setNewRoundName(e.target.value)}
                   placeholder={`Round ${rounds.length + 1}`}
-                  className="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-900"
+                  className="px-4 py-2 rounded-lg border border-slate-600 bg-slate-800 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
                   onKeyPress={(e) => e.key === 'Enter' && addNewRound()}
                 />
                 <button
                   onClick={addNewRound}
-                  className="px-4 py-2 bg-gray-900 text-white rounded-lg font-medium hover:bg-gray-800 transition-all"
+                  className="px-4 py-2 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition-all"
                 >
                   Add
                 </button>
@@ -599,7 +609,7 @@ function App() {
                     setEditingRound(false);
                     setNewRoundName('');
                   }}
-                  className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-all"
+                  className="px-4 py-2 bg-slate-700 text-gray-300 rounded-lg font-medium hover:bg-slate-600 transition-all"
                 >
                   Cancel
                 </button>
@@ -610,10 +620,10 @@ function App() {
 
         {candidates.length === 0 ? (
           <div className="text-center py-16">
-            <p className="text-gray-500 text-lg mb-4">No candidates yet.</p>
+            <p className="text-gray-400 text-lg mb-4">No candidates yet.</p>
             <button
               onClick={() => setAddingCandidate(true)}
-              className="px-6 py-3 bg-gray-900 text-white rounded-lg font-medium hover:bg-gray-800 transition-all inline-flex items-center gap-2"
+              className="px-6 py-3 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition-all inline-flex items-center gap-2"
             >
               <Plus className="w-5 h-5" />
               Add First Candidate
@@ -622,13 +632,13 @@ function App() {
         ) : showGrandTotal ? (
           <>
             <div className="mb-8">
-              <div className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 rounded-3xl shadow-2xl p-8 text-center border border-gray-700">
+              <div className="bg-gradient-to-r from-purple-900 via-purple-800 to-purple-900 rounded-3xl shadow-2xl p-8 text-center border border-purple-700">
                 <div className="inline-flex items-center gap-3 mb-2">
-                  <Trophy className="w-8 h-8 text-yellow-400" />
+                  <Trophy className="w-8 h-8 text-cyan-400" />
                   <h2 className="text-3xl font-bold text-white">Final Standings</h2>
-                  <Trophy className="w-8 h-8 text-yellow-400" />
+                  <Trophy className="w-8 h-8 text-cyan-400" />
                 </div>
-                <p className="text-gray-300 text-lg">Cumulative scores across all rounds</p>
+                <p className="text-purple-200 text-lg">Cumulative scores across all rounds</p>
               </div>
             </div>
 
@@ -707,18 +717,18 @@ function App() {
             </div>
 
             {candidates.length > 3 && (
-              <div className="bg-white rounded-3xl shadow-lg overflow-hidden border border-gray-200 mb-8">
+              <div className="bg-slate-800 rounded-3xl shadow-lg overflow-hidden border border-slate-700 mb-8">
                 <button
                   onClick={() => setExpandedOtherCandidates(!expandedOtherCandidates)}
-                  className="w-full bg-gradient-to-r from-gray-50 to-gray-100 py-4 px-6 border-b border-gray-200 flex items-center justify-between hover:bg-gradient-to-r hover:from-gray-100 hover:to-gray-200 transition-all"
+                  className="w-full bg-gradient-to-r from-slate-800 to-slate-700 py-4 px-6 border-b border-slate-700 flex items-center justify-between hover:from-slate-700 hover:to-slate-600 transition-all"
                 >
-                  <h3 className="text-xl font-bold text-gray-900">Other Candidates</h3>
-                  <div className="text-gray-500 transition-transform" style={{ transform: expandedOtherCandidates ? 'rotate(180deg)' : 'rotate(0deg)' }}>
+                  <h3 className="text-xl font-bold text-white">Other Candidates</h3>
+                  <div className="text-gray-400 transition-transform" style={{ transform: expandedOtherCandidates ? 'rotate(180deg)' : 'rotate(0deg)' }}>
                     ▼
                   </div>
                 </button>
                 {expandedOtherCandidates && (
-                  <div className="divide-y divide-gray-200">
+                  <div className="divide-y divide-slate-700">
                     {[...candidates]
                       .sort((a, b) => getGrandTotalScore(b.id) - getGrandTotalScore(a.id))
                       .slice(3)
@@ -730,17 +740,17 @@ function App() {
                         return (
                           <div
                             key={candidate.id}
-                            className={`flex items-center justify-between p-6 hover:bg-gray-50 transition-all group ${isCelebrating ? 'animate bg-yellow-50' : ''}`}
+                            className={`flex items-center justify-between p-6 hover:bg-slate-700 transition-all group ${isCelebrating ? 'animate bg-purple-900/50' : ''}`}
                           >
                             {isCelebrating && (
                               <div className="absolute left-2 text-xl animate-pulse">✨</div>
                             )}
                             <div className="flex items-center gap-6 flex-1 min-w-0">
-                              <div className="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-gray-200 transition-colors">
-                                <span className="text-2xl font-bold text-gray-600">#{rank}</span>
+                              <div className="w-14 h-14 bg-slate-700 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-slate-600 transition-colors">
+                                <span className="text-2xl font-bold text-gray-300">#{rank}</span>
                               </div>
                               <div className="flex-1 min-w-0">
-                                <h4 className="text-xl font-bold text-gray-900 truncate">{candidate.name}</h4>
+                                <h4 className="text-xl font-bold text-white truncate">{candidate.name}</h4>
                                 <div className={`w-10 h-10 bg-gradient-to-br ${candidate.color_theme} rounded-full flex items-center justify-center shadow-md mt-1`}>
                                   <span className="text-white text-sm font-bold">{candidate.letter}</span>
                                 </div>
@@ -748,8 +758,8 @@ function App() {
                             </div>
                             <div className="flex items-center gap-6 flex-shrink-0">
                               <div className="text-right">
-                                <div className="text-xs text-gray-500 font-medium mb-1 uppercase tracking-wide">Score</div>
-                                <div className="text-4xl font-bold text-gray-900">{totalScore}</div>
+                                <div className="text-xs text-gray-400 font-medium mb-1 uppercase tracking-wide">Score</div>
+                                <div className="text-4xl font-bold text-white">{totalScore}</div>
                               </div>
                               <button
                                 onClick={() => {
@@ -763,8 +773,8 @@ function App() {
                                 }}
                                 className={`p-2 rounded-full transition-all ${
                                   isCelebrating
-                                    ? 'bg-yellow-300 text-yellow-900 hover:bg-yellow-400'
-                                    : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+                                    ? 'bg-cyan-500 text-white hover:bg-cyan-600'
+                                    : 'bg-slate-700 text-gray-400 hover:bg-slate-600'
                                 }`}
                                 title={isCelebrating ? 'Stop celebrating' : 'Celebrate!'}
                               >
@@ -779,12 +789,12 @@ function App() {
               </div>
             )}
 
-            <div className="mt-12 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 rounded-3xl shadow-2xl p-8 text-center border border-gray-700">
-              <div className="text-gray-300 text-sm font-semibold mb-2 uppercase tracking-wider">Combined Total</div>
+            <div className="mt-12 bg-gradient-to-r from-purple-900 via-purple-800 to-purple-900 rounded-3xl shadow-2xl p-8 text-center border border-purple-700">
+              <div className="text-purple-200 text-sm font-semibold mb-2 uppercase tracking-wider">Combined Total</div>
               <div className="text-6xl font-bold text-white mb-2">
                 {allRoundScores.reduce((sum, score) => sum + score.score, 0)}
               </div>
-              <div className="text-gray-400 text-lg">points across {rounds.length} {rounds.length === 1 ? 'round' : 'rounds'}</div>
+              <div className="text-purple-300 text-lg">points across {rounds.length} {rounds.length === 1 ? 'round' : 'rounds'}</div>
             </div>
           </>
         ) : activeRound ? (
@@ -793,7 +803,7 @@ function App() {
               {!addingCandidate ? (
                 <button
                   onClick={() => setAddingCandidate(true)}
-                  className="px-4 py-2 bg-gray-900 text-white rounded-lg font-medium hover:bg-gray-800 transition-all inline-flex items-center gap-2"
+                  className="px-4 py-2 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition-all inline-flex items-center gap-2"
                 >
                   <Plus className="w-4 h-4" />
                   Add Candidate
@@ -806,19 +816,19 @@ function App() {
                     onChange={(e) => setNewCandidateLetter(e.target.value)}
                     placeholder="Letter (e.g., A)"
                     maxLength={1}
-                    className="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-900 w-24"
+                    className="px-4 py-2 rounded-lg border border-slate-600 bg-slate-800 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 w-24"
                   />
                   <input
                     type="text"
                     value={newCandidateName}
                     onChange={(e) => setNewCandidateName(e.target.value)}
                     placeholder="Candidate Name"
-                    className="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-900"
+                    className="px-4 py-2 rounded-lg border border-slate-600 bg-slate-800 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
                     onKeyPress={(e) => e.key === 'Enter' && addCandidate()}
                   />
                   <button
                     onClick={addCandidate}
-                    className="px-4 py-2 bg-gray-900 text-white rounded-lg font-medium hover:bg-gray-800 transition-all"
+                    className="px-4 py-2 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition-all"
                   >
                     Add
                   </button>
@@ -828,7 +838,7 @@ function App() {
                       setNewCandidateName('');
                       setNewCandidateLetter('');
                     }}
-                    className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-all"
+                    className="px-4 py-2 bg-slate-700 text-gray-300 rounded-lg font-medium hover:bg-slate-600 transition-all"
                   >
                     Cancel
                   </button>
@@ -844,10 +854,10 @@ function App() {
             return (
             <div
               key={candidate.id}
-              className={`bg-gradient-to-br ${candidate.color_theme} rounded-3xl shadow-lg p-6 transition-transform hover:scale-105 relative`}
+              className={`bg-gradient-to-br ${candidate.color_theme} rounded-3xl shadow-lg p-6 transition-transform hover:scale-105 relative border border-purple-500/30`}
             >
               {badge && (
-                <div className={`absolute -top-3 -right-3 ${badge.bg} ${badge.text} rounded-full w-16 h-16 flex items-center justify-center shadow-lg border-2 border-white`}>
+                <div className={`absolute -top-3 -right-3 ${badge.bg} ${badge.text} rounded-full w-16 h-16 flex items-center justify-center shadow-lg border-2 border-slate-900`}>
                   <div className="flex flex-col items-center">
                     {BadgeIcon && <BadgeIcon className="w-6 h-6" />}
                     <span className="text-xs font-bold">{badge.label}</span>
@@ -856,7 +866,7 @@ function App() {
               )}
               <div className="flex items-center justify-between mb-8">
                 <div className="flex items-center gap-3 min-w-0">
-                  <div className="w-12 h-12 bg-gray-900 rounded-full flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-slate-900 rounded-full flex items-center justify-center flex-shrink-0">
                     <span className="text-white text-xl font-bold">{candidate.letter}</span>
                   </div>
                   {editingCandidateName === candidate.id ? (
@@ -865,37 +875,37 @@ function App() {
                         type="text"
                         value={editName}
                         onChange={(e) => setEditName(e.target.value)}
-                        className="px-2 py-1 rounded text-gray-900 font-semibold text-lg min-w-0"
+                        className="px-2 py-1 rounded text-white bg-slate-800 font-semibold text-lg min-w-0"
                         onKeyPress={(e) => e.key === 'Enter' && saveCandidateName(candidate.id)}
                         autoFocus
                       />
                       <button
                         onClick={() => saveCandidateName(candidate.id)}
-                        className="px-2 py-1 bg-gray-900 text-white rounded text-sm font-medium hover:bg-gray-800 transition-colors flex-shrink-0"
+                        className="px-2 py-1 bg-purple-600 text-white rounded text-sm font-medium hover:bg-purple-700 transition-colors flex-shrink-0"
                       >
                         Save
                       </button>
                       <button
                         onClick={() => setEditingCandidateName(null)}
-                        className="px-2 py-1 bg-gray-700 text-white rounded text-sm font-medium hover:bg-gray-600 transition-colors flex-shrink-0"
+                        className="px-2 py-1 bg-slate-700 text-white rounded text-sm font-medium hover:bg-slate-600 transition-colors flex-shrink-0"
                       >
                         Cancel
                       </button>
                     </div>
                   ) : (
-                    <span className="text-gray-900 text-xl font-semibold truncate">{candidate.name}</span>
+                    <span className="text-white text-xl font-semibold truncate">{candidate.name}</span>
                   )}
                 </div>
                 <button
                   onClick={() => startEditName(candidate.id, candidate.name)}
-                  className="p-2 hover:bg-black/10 rounded-full transition-colors flex-shrink-0"
+                  className="p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0"
                 >
-                  <Pencil className="w-5 h-5 text-gray-900" />
+                  <Pencil className="w-5 h-5 text-white" />
                 </button>
               </div>
 
               <div className="text-center mb-8">
-                <div className="text-gray-800 text-sm font-medium mb-2">
+                <div className="text-white text-sm font-medium mb-2">
                   Total
                 </div>
                 {editingCandidateScore === candidate.id ? (
@@ -904,20 +914,20 @@ function App() {
                       type="number"
                       value={editScore}
                       onChange={(e) => setEditScore(e.target.value)}
-                      className="px-3 py-2 rounded text-gray-900 font-bold text-3xl w-32 text-center"
+                      className="px-3 py-2 rounded text-white bg-slate-800 font-bold text-3xl w-32 text-center"
                       onKeyPress={(e) => e.key === 'Enter' && saveCandidateScore(candidate.id)}
                       autoFocus
                     />
                     <div className="flex gap-2">
                       <button
                         onClick={() => saveCandidateScore(candidate.id)}
-                        className="px-3 py-1 bg-gray-900 text-white rounded text-sm font-medium hover:bg-gray-800 transition-colors"
+                        className="px-3 py-1 bg-purple-600 text-white rounded text-sm font-medium hover:bg-purple-700 transition-colors"
                       >
                         Save
                       </button>
                       <button
                         onClick={() => setEditingCandidateScore(null)}
-                        className="px-3 py-1 bg-gray-700 text-white rounded text-sm font-medium hover:bg-gray-600 transition-colors"
+                        className="px-3 py-1 bg-slate-700 text-white rounded text-sm font-medium hover:bg-slate-600 transition-colors"
                       >
                         Cancel
                       </button>
@@ -925,12 +935,12 @@ function App() {
                   </div>
                 ) : (
                   <div className="flex items-center justify-center gap-3">
-                    <span className="text-7xl font-bold text-gray-900">{getCandidateScore(candidate.id)}</span>
+                    <span className="text-7xl font-bold text-white">{getCandidateScore(candidate.id)}</span>
                     <button
                       onClick={() => startEditScore(candidate.id)}
-                      className="p-2 hover:bg-black/10 rounded-full transition-colors"
+                      className="p-2 hover:bg-white/10 rounded-full transition-colors"
                     >
-                      <Pencil className="w-6 h-6 text-gray-900" />
+                      <Pencil className="w-6 h-6 text-white" />
                     </button>
                   </div>
                 )}
@@ -941,7 +951,7 @@ function App() {
                   <button
                     key={points}
                     onClick={() => addScore(candidate.id, points)}
-                    className="w-14 h-14 border-2 border-gray-900 rounded-full font-semibold text-gray-900 hover:bg-black/10 transition-all hover:scale-110 active:scale-95"
+                    className="w-14 h-14 border-2 border-white rounded-full font-semibold text-white hover:bg-white/10 transition-all hover:scale-110 active:scale-95"
                   >
                     +{points}
                   </button>
@@ -949,7 +959,7 @@ function App() {
               </div>
               <button
                 onClick={() => deleteCandidate(candidate.id)}
-                className="mt-4 w-full py-1 text-xs bg-red-100 text-red-700 rounded font-medium hover:bg-red-200 transition-all"
+                className="mt-4 w-full py-1 text-xs bg-red-500/20 text-red-300 rounded font-medium hover:bg-red-500/30 transition-all"
               >
                 Remove
               </button>
@@ -959,7 +969,7 @@ function App() {
             </div>
             {candidates.length > 0 && (
               <div className="text-center">
-                <p className="text-2xl font-semibold text-gray-900">
+                <p className="text-2xl font-semibold text-white">
                   Total Score Across All Candidates: {totalScore}
                 </p>
               </div>
