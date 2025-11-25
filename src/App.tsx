@@ -26,9 +26,14 @@ interface CandidateWithScore extends Candidate {
 }
 
 const colorThemes = [
-  'from-purple-500 to-purple-700',
-  'from-cyan-500 to-teal-600',
-  'from-blue-500 to-blue-700',
+  'from-yellow-400 to-orange-500',
+  'from-orange-400 to-pink-500',
+  'from-cyan-400 to-teal-500',
+  'from-purple-400 to-indigo-500',
+  'from-green-400 to-blue-500',
+  'from-red-400 to-pink-500',
+  'from-blue-400 to-purple-500',
+  'from-indigo-400 to-gray-500',
 ];
 
 function App() {
@@ -518,346 +523,366 @@ function App() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">
-        <p className="text-gray-300 text-lg">Loading...</p>
+      <div className="min-h-screen bg-gray-900 flex items-center justify-center overflow-x-hidden">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500 mb-4"></div>
+          <p className="text-gray-300 text-lg">Loading...</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="mb-12">
-          <div className="flex items-center gap-6 mb-8">
-            <img
-              src="/image.png"
-              alt="Mr. Talent Logo"
-              className="h-32 w-auto"
-            />
-            <div>
-              <h1 className="text-5xl font-bold text-white tracking-wide">SCOREBOARD</h1>
-              <p className="text-cyan-300 text-base mt-2 uppercase tracking-widest">Season 02</p>
-            </div>
+    <div className="min-h-screen bg-gray-50 bg-opacity-90 p-0">
+      <div className="flex min-h-screen">
+        {/* Sidebar */}
+        <div className="w-64 bg-gray-900 text-white min-h-screen p-4 flex flex-col">
+          <div className="flex flex-col items-center mb-6">
+            <img src="/image.png" alt="Logo" className="h-48 w-48 object-contain mb-4" />
+            <h1 className="text-sm font-bold text-center">Candidate Scoreboard</h1>
           </div>
-
-          <div className="flex flex-wrap gap-2 items-center">
+          
+          <div className="mb-4">
             <button
               onClick={() => {
                 setShowGrandTotal(true);
                 setActiveRound(null);
               }}
-              className={`px-6 py-2 rounded-lg font-medium transition-all ${
+              className={`w-full text-left px-3 py-2 rounded-lg font-medium transition-all mb-2 text-sm ${
                 showGrandTotal
-                  ? 'bg-purple-600 text-white shadow-lg shadow-purple-500/50'
-                  : 'bg-slate-700 text-gray-300 hover:bg-slate-600'
+                  ? 'bg-gradient-to-r from-purple-600 to-indigo-700 text-white shadow-lg'
+                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
               }`}
             >
-              TOTAL
+              Grand Total
             </button>
-            {rounds.map((round) => (
-              <div key={round.id} className="relative group">
-                <button
-                  onClick={() => {
-                    setActiveRound(round.id);
-                    setShowGrandTotal(false);
-                  }}
-                  className={`px-6 py-2 rounded-lg font-medium transition-all uppercase ${
-                    activeRound === round.id && !showGrandTotal
-                      ? 'bg-purple-600 text-white shadow-lg shadow-purple-500/50'
-                      : 'bg-slate-700 text-gray-300 hover:bg-slate-600'
-                  }`}
-                >
-                  {round.name}
-                </button>
-                {rounds.length > 1 && (
-                  <button
-                    onClick={() => deleteRound(round.id)}
-                    className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600"
-                    title="Delete round"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                )}
-              </div>
-            ))}
-            {!editingRound ? (
+          </div>
+          
+          <div className="mb-4 flex-1">
+            <div className="flex justify-between items-center mb-2">
+              <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Rounds</h2>
               <button
                 onClick={() => setEditingRound(true)}
-                className="px-3 py-2 bg-slate-700 text-gray-300 rounded-lg text-sm font-medium hover:bg-slate-600 transition-all flex items-center gap-1"
+                className="p-1 bg-gray-800 hover:bg-gray-700 rounded-full"
+                title="Add Round"
               >
                 <Plus className="w-3 h-3" />
-                Add Round
               </button>
-            ) : (
-              <div className="flex gap-2 items-center">
+            </div>
+            <div className="space-y-1">
+              {rounds.map((round) => (
+                <div key={round.id} className="relative group">
+                  <button
+                    onClick={() => {
+                      setActiveRound(round.id);
+                      setShowGrandTotal(false);
+                    }}
+                    className={`w-full text-left px-3 py-2 rounded-lg font-medium transition-all text-sm ${
+                      activeRound === round.id && !showGrandTotal
+                        ? 'bg-gradient-to-r from-purple-600 to-indigo-700 text-white shadow-lg'
+                        : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                    }`}
+                  >
+                    {round.name}
+                  </button>
+                  {rounds.length > 1 && (
+                    <button
+                      onClick={() => deleteRound(round.id)}
+                      className="absolute top-1/2 -translate-y-1/2 right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600"
+                      title="Delete round"
+                    >
+                      <X className="w-2 h-2" />
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+          
+          <div>
+            {editingRound && (
+              <div className="space-y-2 mb-2">
                 <input
                   type="text"
                   value={newRoundName}
                   onChange={(e) => setNewRoundName(e.target.value)}
                   placeholder={`Round ${rounds.length + 1}`}
-                  className="px-4 py-2 rounded-lg border border-slate-600 bg-slate-800 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm"
                   onKeyPress={(e) => e.key === 'Enter' && addNewRound()}
                 />
-                <button
-                  onClick={addNewRound}
-                  className="px-4 py-2 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition-all"
-                >
-                  Add
-                </button>
-                <button
-                  onClick={() => {
-                    setEditingRound(false);
-                    setNewRoundName('');
-                  }}
-                  className="px-4 py-2 bg-slate-700 text-gray-300 rounded-lg font-medium hover:bg-slate-600 transition-all"
-                >
-                  Cancel
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {candidates.length === 0 ? (
-          <div className="text-center py-16">
-            <p className="text-gray-400 text-lg mb-4">No candidates yet.</p>
-            <button
-              onClick={() => setAddingCandidate(true)}
-              className="px-6 py-3 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition-all inline-flex items-center gap-2"
-            >
-              <Plus className="w-5 h-5" />
-              Add First Candidate
-            </button>
-          </div>
-        ) : showGrandTotal ? (
-          <>
-            <div className="mb-8">
-              <div className="bg-gradient-to-r from-purple-900 via-purple-800 to-purple-900 rounded-3xl shadow-2xl p-8 text-center border border-purple-700">
-                <div className="inline-flex items-center gap-3 mb-2">
-                  <Trophy className="w-8 h-8 text-cyan-400" />
-                  <h2 className="text-3xl font-bold text-white">Final Standings</h2>
-                  <Trophy className="w-8 h-8 text-cyan-400" />
-                </div>
-                <p className="text-purple-200 text-lg">Cumulative scores across all rounds</p>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-              {[...candidates]
-                .sort((a, b) => getGrandTotalScore(b.id) - getGrandTotalScore(a.id))
-                .slice(0, 3)
-                .map((candidate, index) => {
-                  const rank = index + 1;
-                  const badge = getRankingBadge(rank);
-                  const BadgeIcon = badge?.icon;
-                  const totalScore = getGrandTotalScore(candidate.id);
-                  const maxScore = Math.max(...candidates.map(c => getGrandTotalScore(c.id)));
-                  const scorePercentage = maxScore > 0 ? (totalScore / maxScore) * 100 : 0;
-                  const isCelebrating = celebratingRanks.has(rank);
-
-                  return (
-                    <div
-                      key={candidate.id}
-                      className={`relative overflow-hidden rounded-3xl shadow-2xl transform transition-all duration-300 hover:scale-105 ${
-                        rank === 1
-                          ? 'lg:col-start-2 lg:row-start-1 lg:scale-110'
-                          : rank === 2
-                          ? 'lg:col-start-1 lg:row-start-1'
-                          : 'lg:col-start-3 lg:row-start-1'
-                      } ${isCelebrating ? 'animate' : ''}`}
-                      style={{
-                        background: rank === 1
-                          ? 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)'
-                          : rank === 2
-                          ? 'linear-gradient(135deg, #e5e7eb 0%, #9ca3af 100%)'
-                          : 'linear-gradient(135deg, #fdba74 0%, #fb923c 100%)'
-                      }}
-                    >
-                      <div className="absolute top-0 left-0 w-full h-2 bg-white opacity-30"></div>
-                      {isCelebrating && (
-                        <>
-                          <div className="absolute top-2 left-4 animate-pulse text-2xl">✨</div>
-                          <div className="absolute top-4 right-6 animate-pulse text-2xl" style={{ animationDelay: '0.5s' }}>✨</div>
-                          <div className="absolute bottom-8 left-8 animate-pulse text-2xl" style={{ animationDelay: '1s' }}>✨</div>
-                        </>
-                      )}
-                      <div className="p-8">
-                        <div className="flex flex-col items-center text-center">
-                          {badge && BadgeIcon && (
-                            <div className={`${badge.bg} ${badge.text} rounded-full w-20 h-20 flex items-center justify-center shadow-xl mb-4 border-4 border-white`}>
-                              <div className="flex flex-col items-center">
-                                <BadgeIcon className="w-8 h-8" />
-                                <span className="text-sm font-bold">{badge.label}</span>
-                              </div>
-                            </div>
-                          )}
-
-                          <h3 className="text-4xl font-bold text-gray-900 mb-4">{candidate.name}</h3>
-
-                          <div className={`w-16 h-16 bg-gradient-to-br ${candidate.color_theme} rounded-full flex items-center justify-center mb-4 shadow-lg border-4 border-white`}>
-                            <span className="text-white text-2xl font-bold">{candidate.letter}</span>
-                          </div>
-
-                          <div className="w-full bg-white bg-opacity-50 rounded-full h-3 mb-4 overflow-hidden">
-                            <div
-                              className="bg-gray-900 h-full rounded-full transition-all duration-1000 ease-out"
-                              style={{ width: `${scorePercentage}%` }}
-                            ></div>
-                          </div>
-
-                          <div className="bg-white bg-opacity-90 rounded-2xl p-6 w-full shadow-lg">
-                            <div className="text-gray-600 text-sm font-semibold mb-2 uppercase tracking-wide">Total Score</div>
-                            <div className="text-6xl font-bold text-gray-900">{totalScore}</div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-            </div>
-
-            {candidates.length > 3 && (
-              <div className="bg-slate-800 rounded-3xl shadow-lg overflow-hidden border border-slate-700 mb-8">
-                <button
-                  onClick={() => setExpandedOtherCandidates(!expandedOtherCandidates)}
-                  className="w-full bg-gradient-to-r from-slate-800 to-slate-700 py-4 px-6 border-b border-slate-700 flex items-center justify-between hover:from-slate-700 hover:to-slate-600 transition-all"
-                >
-                  <h3 className="text-xl font-bold text-white">Other Candidates</h3>
-                  <div className="text-gray-400 transition-transform" style={{ transform: expandedOtherCandidates ? 'rotate(180deg)' : 'rotate(0deg)' }}>
-                    ▼
-                  </div>
-                </button>
-                {expandedOtherCandidates && (
-                  <div className="divide-y divide-slate-700">
-                    {[...candidates]
-                      .sort((a, b) => getGrandTotalScore(b.id) - getGrandTotalScore(a.id))
-                      .slice(3)
-                      .map((candidate, index) => {
-                        const rank = index + 4;
-                        const totalScore = getGrandTotalScore(candidate.id);
-                        const isCelebrating = celebratingRanks.has(rank);
-
-                        return (
-                          <div
-                            key={candidate.id}
-                            className={`flex items-center justify-between p-6 hover:bg-slate-700 transition-all group ${isCelebrating ? 'animate bg-purple-900/50' : ''}`}
-                          >
-                            {isCelebrating && (
-                              <div className="absolute left-2 text-xl animate-pulse">✨</div>
-                            )}
-                            <div className="flex items-center gap-6 flex-1 min-w-0">
-                              <div className="w-14 h-14 bg-slate-700 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-slate-600 transition-colors">
-                                <span className="text-2xl font-bold text-gray-300">#{rank}</span>
-                              </div>
-                              <div className="flex-1 min-w-0">
-                                <h4 className="text-xl font-bold text-white truncate">{candidate.name}</h4>
-                                <div className={`w-10 h-10 bg-gradient-to-br ${candidate.color_theme} rounded-full flex items-center justify-center shadow-md mt-1`}>
-                                  <span className="text-white text-sm font-bold">{candidate.letter}</span>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="flex items-center gap-6 flex-shrink-0">
-                              <div className="text-right">
-                                <div className="text-xs text-gray-400 font-medium mb-1 uppercase tracking-wide">Score</div>
-                                <div className="text-4xl font-bold text-white">{totalScore}</div>
-                              </div>
-                              <button
-                                onClick={() => {
-                                  const newSet = new Set(celebratingRanks);
-                                  if (newSet.has(rank)) {
-                                    newSet.delete(rank);
-                                  } else {
-                                    newSet.add(rank);
-                                  }
-                                  setCelebratingRanks(newSet);
-                                }}
-                                className={`p-2 rounded-full transition-all ${
-                                  isCelebrating
-                                    ? 'bg-cyan-500 text-white hover:bg-cyan-600'
-                                    : 'bg-slate-700 text-gray-400 hover:bg-slate-600'
-                                }`}
-                                title={isCelebrating ? 'Stop celebrating' : 'Celebrate!'}
-                              >
-                                <Sparkles className="w-5 h-5" />
-                              </button>
-                            </div>
-                          </div>
-                        );
-                      })}
-                  </div>
-                )}
-              </div>
-            )}
-
-            <div className="mt-12 bg-gradient-to-r from-purple-900 via-purple-800 to-purple-900 rounded-3xl shadow-2xl p-8 text-center border border-purple-700">
-              <div className="text-purple-200 text-sm font-semibold mb-2 uppercase tracking-wider">Combined Total</div>
-              <div className="text-6xl font-bold text-white mb-2">
-                {allRoundScores.reduce((sum, score) => sum + score.score, 0)}
-              </div>
-              <div className="text-purple-300 text-lg">points across {rounds.length} {rounds.length === 1 ? 'round' : 'rounds'}</div>
-            </div>
-          </>
-        ) : activeRound ? (
-          <>
-            <div className="flex justify-end mb-4">
-              {!addingCandidate ? (
-                <button
-                  onClick={() => setAddingCandidate(true)}
-                  className="px-4 py-2 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition-all inline-flex items-center gap-2"
-                >
-                  <Plus className="w-4 h-4" />
-                  Add Candidate
-                </button>
-              ) : (
-                <div className="flex gap-2 items-center">
-                  <input
-                    type="text"
-                    value={newCandidateLetter}
-                    onChange={(e) => setNewCandidateLetter(e.target.value)}
-                    placeholder="Letter (e.g., A)"
-                    maxLength={1}
-                    className="px-4 py-2 rounded-lg border border-slate-600 bg-slate-800 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 w-24"
-                  />
-                  <input
-                    type="text"
-                    value={newCandidateName}
-                    onChange={(e) => setNewCandidateName(e.target.value)}
-                    placeholder="Candidate Name"
-                    className="px-4 py-2 rounded-lg border border-slate-600 bg-slate-800 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-                    onKeyPress={(e) => e.key === 'Enter' && addCandidate()}
-                  />
+                <div className="flex gap-1">
                   <button
-                    onClick={addCandidate}
-                    className="px-4 py-2 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition-all"
+                    onClick={addNewRound}
+                    className="flex-1 px-3 py-2 bg-gradient-to-r from-purple-600 to-indigo-700 text-white rounded-lg font-medium hover:from-purple-700 hover:to-indigo-800 transition-all text-sm"
                   >
                     Add
                   </button>
                   <button
                     onClick={() => {
-                      setAddingCandidate(false);
-                      setNewCandidateName('');
-                      setNewCandidateLetter('');
+                      setEditingRound(false);
+                      setNewRoundName('');
                     }}
-                    className="px-4 py-2 bg-slate-700 text-gray-300 rounded-lg font-medium hover:bg-slate-600 transition-all"
+                    className="flex-1 px-3 py-2 bg-gray-700 text-white rounded-lg font-medium hover:bg-gray-600 transition-all text-sm"
                   >
                     Cancel
                   </button>
                 </div>
-              )}
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-              {[...candidates].sort((a, b) => a.letter.localeCompare(b.letter)).map((candidate) => {
+              </div>
+            )}
+          </div>
+        </div>
+        
+        {/* Main Content */}
+        <div className="flex-1 p-8 overflow-hidden">
+          <div className="max-w-7xl mx-auto">
+            {candidates.length === 0 ? (
+              <div className="text-center py-16">
+                <p className="text-gray-500 text-lg mb-4">No candidates yet.</p>
+                <button
+                  onClick={() => setAddingCandidate(true)}
+                  className="px-6 py-3 bg-gradient-to-r from-purple-600 to-indigo-700 text-white rounded-lg font-medium hover:from-purple-700 hover:to-indigo-800 transition-all inline-flex items-center gap-2"
+                >
+                  <Plus className="w-5 h-5" />
+                  Add First Candidate
+                </button>
+              </div>
+            ) : showGrandTotal ? (
+              <>
+                <div className="mb-8">
+                  <div className="bg-gradient-to-r from-purple-900 via-indigo-800 to-purple-900 rounded-3xl shadow-2xl p-8 text-center border border-purple-700">
+                    <div className="inline-flex items-center gap-3 mb-2">
+                      <Trophy className="w-8 h-8 text-yellow-400" />
+                      <h2 className="text-3xl font-bold text-white">Final Standings</h2>
+                      <Trophy className="w-8 h-8 text-yellow-400" />
+                    </div>
+                    <p className="text-purple-200 text-lg">Cumulative scores across all rounds</p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+                  {[...candidates]
+                    .sort((a, b) => getGrandTotalScore(b.id) - getGrandTotalScore(a.id))
+                    .slice(0, 3)
+                    .map((candidate, index) => {
+                      const rank = index + 1;
+                      const badge = getRankingBadge(rank);
+                      const BadgeIcon = badge?.icon;
+                      const totalScore = getGrandTotalScore(candidate.id);
+                      const maxScore = Math.max(...candidates.map(c => getGrandTotalScore(c.id)));
+                      const scorePercentage = maxScore > 0 ? (totalScore / maxScore) * 100 : 0;
+                      const isCelebrating = celebratingRanks.has(rank);
+                      // Find the original index of this candidate in the candidates array
+                      const candidateIndex = candidates.findIndex(c => c.id === candidate.id);
+                      const colorTheme = candidateIndex !== -1 ? colorThemes[candidateIndex % colorThemes.length] : colorThemes[index % colorThemes.length];
+
+                      return (
+                        <div
+                          key={candidate.id}
+                          className={`relative overflow-hidden rounded-3xl shadow-2xl transform transition-all duration-300 hover:scale-105 ${
+                            rank === 1
+                              ? 'lg:col-start-2 lg:row-start-1 lg:scale-110'
+                              : rank === 2
+                              ? 'lg:col-start-1 lg:row-start-1'
+                              : 'lg:col-start-3 lg:row-start-1'
+                          } ${isCelebrating ? 'animate' : ''}`}
+                          style={{
+                            background: rank === 1
+                              ? 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)'
+                              : rank === 2
+                              ? 'linear-gradient(135deg, #e5e7eb 0%, #9ca3af 100%)'
+                              : 'linear-gradient(135deg, #fdba74 0%, #fb923c 100%)'
+                          }}
+                        >
+                          <div className="absolute top-0 left-0 w-full h-2 bg-white opacity-30"></div>
+                          {isCelebrating && (
+                            <>
+                              <div className="absolute top-2 left-4 animate-pulse text-2xl">✨</div>
+                              <div className="absolute top-4 right-6 animate-pulse text-2xl" style={{ animationDelay: '0.5s' }}>✨</div>
+                              <div className="absolute bottom-8 left-8 animate-pulse text-2xl" style={{ animationDelay: '1s' }}>✨</div>
+                            </>
+                          )}
+                          <div className="p-8">
+                            <div className="flex flex-col items-center text-center">
+                              {badge && BadgeIcon && (
+                                <div className={`${badge.bg} ${badge.text} rounded-full w-20 h-20 flex items-center justify-center shadow-xl mb-4 border-4 border-white`}>
+                                  <div className="flex flex-col items-center">
+                                    <BadgeIcon className="w-8 h-8" />
+                                    <span className="text-sm font-bold">{badge.label}</span>
+                                  </div>
+                                </div>
+                              )}
+
+                              <h3 className="text-4xl font-bold text-gray-900 mb-4">{candidate.name}</h3>
+
+                              <div className={`w-16 h-16 bg-gradient-to-br ${colorTheme} rounded-full flex items-center justify-center mb-4 shadow-lg border-4 border-white`}>
+                                <span className="text-white text-2xl font-bold">{candidate.letter}</span>
+                              </div>
+
+                              <div className="w-full bg-white bg-opacity-50 rounded-full h-3 mb-4 overflow-hidden">
+                                <div
+                                  className="bg-gray-900 h-full rounded-full transition-all duration-1000 ease-out"
+                                  style={{ width: `${scorePercentage}%` }}
+                                ></div>
+                              </div>
+
+                              <div className="bg-white bg-opacity-90 rounded-2xl p-6 w-full shadow-lg">
+                                <div className="text-gray-600 text-sm font-semibold mb-2 uppercase tracking-wide">Total Score</div>
+                                <div className="text-6xl font-bold text-gray-900">{totalScore}</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                </div>
+
+                {candidates.length > 3 && (
+                  <div className="bg-white rounded-3xl shadow-lg overflow-hidden border border-gray-200 mb-8">
+                    <button
+                      onClick={() => setExpandedOtherCandidates(!expandedOtherCandidates)}
+                      className="w-full bg-gradient-to-r from-purple-50 to-indigo-100 py-4 px-6 border-b border-gray-200 flex items-center justify-between hover:bg-gradient-to-r hover:from-purple-100 hover:to-indigo-200 transition-all"
+                    >
+                      <h3 className="text-xl font-bold text-gray-900">Other Candidates</h3>
+                      <div className="text-gray-500 transition-transform" style={{ transform: expandedOtherCandidates ? 'rotate(180deg)' : 'rotate(0deg)' }}>
+                        ▼
+                      </div>
+                    </button>
+                    {expandedOtherCandidates && (
+                      <div className="divide-y divide-gray-200">
+                        {[...candidates]
+                          .sort((a, b) => getGrandTotalScore(b.id) - getGrandTotalScore(a.id))
+                          .slice(3)
+                          .map((candidate, index) => {
+                            const rank = index + 4;
+                            const totalScore = getGrandTotalScore(candidate.id);
+                            const isCelebrating = celebratingRanks.has(rank);
+                            // Find the original index of this candidate in the candidates array
+                            const candidateIndex = candidates.findIndex(c => c.id === candidate.id);
+                            const colorTheme = candidateIndex !== -1 ? colorThemes[candidateIndex % colorThemes.length] : colorThemes[index % colorThemes.length];
+
+                            return (
+                              <div
+                                key={candidate.id}
+                                className={`flex items-center justify-between p-6 hover:bg-gray-50 transition-all group ${isCelebrating ? 'animate bg-yellow-50' : ''}`}
+                              >
+                                {isCelebrating && (
+                                  <div className="absolute left-2 text-xl animate-pulse">✨</div>
+                                )}
+                                <div className="flex items-center gap-6 flex-1 min-w-0">
+                                  <div className="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-gray-200 transition-colors">
+                                    <span className="text-2xl font-bold text-gray-600">#{rank}</span>
+                                  </div>
+                                  <div className="flex-1 min-w-0">
+                                    <h4 className="text-xl font-bold text-gray-900 truncate">{candidate.name}</h4>
+                                    <div className={`w-10 h-10 bg-gradient-to-br ${colorTheme} rounded-full flex items-center justify-center shadow-md mt-1`}>
+                                      <span className="text-white text-sm font-bold">{candidate.letter}</span>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="flex items-center gap-6 flex-shrink-0">
+                                  <div className="text-right">
+                                    <div className="text-xs text-gray-500 font-medium mb-1 uppercase tracking-wide">Score</div>
+                                    <div className="text-4xl font-bold text-gray-900">{totalScore}</div>
+                                  </div>
+                                  <button
+                                    onClick={() => {
+                                      const newSet = new Set(celebratingRanks);
+                                      if (newSet.has(rank)) {
+                                        newSet.delete(rank);
+                                      } else {
+                                        newSet.add(rank);
+                                      }
+                                      setCelebratingRanks(newSet);
+                                    }}
+                                    className={`p-2 rounded-full transition-all ${
+                                      isCelebrating
+                                        ? 'bg-yellow-300 text-yellow-900 hover:bg-yellow-400'
+                                        : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+                                    }`}
+                                    title={isCelebrating ? 'Stop celebrating' : 'Celebrate!'}
+                                  >
+                                    <Sparkles className="w-5 h-5" />
+                                  </button>
+                                </div>
+                              </div>
+                            );
+                          })}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                <div className="mt-12 bg-gradient-to-r from-purple-900 via-indigo-800 to-purple-900 rounded-3xl shadow-2xl p-8 text-center border border-purple-700">
+                  <div className="text-purple-200 text-sm font-semibold mb-2 uppercase tracking-wider">Combined Total</div>
+                  <div className="text-6xl font-bold text-white mb-2">
+                    {allRoundScores.reduce((sum, score) => sum + score.score, 0)}
+                  </div>
+                  <div className="text-purple-300 text-lg">points across {rounds.length} {rounds.length === 1 ? 'round' : 'rounds'}</div>
+                </div>
+              </>
+            ) : activeRound ? (
+              <>
+                <div className="flex justify-end mb-4">
+                  {!addingCandidate ? (
+                    <button
+                      onClick={() => setAddingCandidate(true)}
+                      className="px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-700 text-white rounded-lg font-medium hover:from-purple-700 hover:to-indigo-800 transition-all inline-flex items-center gap-2"
+                    >
+                      <Plus className="w-4 h-4" />
+                      Add Candidate
+                    </button>
+                  ) : (
+                    <div className="flex gap-2 items-center">
+                      <input
+                        type="text"
+                        value={newCandidateLetter}
+                        onChange={(e) => setNewCandidateLetter(e.target.value)}
+                        placeholder="Letter (e.g., A)"
+                        maxLength={1}
+                        className="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 w-24"
+                      />
+                      <input
+                        type="text"
+                        value={newCandidateName}
+                        onChange={(e) => setNewCandidateName(e.target.value)}
+                        placeholder="Candidate Name"
+                        className="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        onKeyPress={(e) => e.key === 'Enter' && addCandidate()}
+                      />
+                      <button
+                        onClick={addCandidate}
+                        className="px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-700 text-white rounded-lg font-medium hover:from-purple-700 hover:to-indigo-800 transition-all"
+                      >
+                        Add
+                      </button>
+                      <button
+                        onClick={() => {
+                          setAddingCandidate(false);
+                          setNewCandidateName('');
+                          setNewCandidateLetter('');
+                        }}
+                        className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-all"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  )}
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                  {candidates.map((candidate, index) => {
             const rank = getRanking(candidate.id);
             const badge = getRankingBadge(rank);
             const BadgeIcon = badge?.icon;
+            // Assign color based on index to ensure variety
+            const colorTheme = colorThemes[index % colorThemes.length];
 
             return (
             <div
               key={candidate.id}
-              className={`bg-gradient-to-br ${candidate.color_theme} rounded-3xl shadow-lg p-6 transition-transform hover:scale-105 relative border border-purple-500/30`}
+              className={`bg-gradient-to-br ${colorTheme} rounded-3xl shadow-lg p-6 transition-transform hover:scale-105 relative overflow-hidden`}
             >
               {badge && (
-                <div className={`absolute -top-3 -right-3 ${badge.bg} ${badge.text} rounded-full w-16 h-16 flex items-center justify-center shadow-lg border-2 border-slate-900`}>
+                <div className={`absolute -top-3 -right-3 ${badge.bg} ${badge.text} rounded-full w-16 h-16 flex items-center justify-center shadow-lg border-2 border-white`}>
                   <div className="flex flex-col items-center">
                     {BadgeIcon && <BadgeIcon className="w-6 h-6" />}
                     <span className="text-xs font-bold">{badge.label}</span>
@@ -866,7 +891,7 @@ function App() {
               )}
               <div className="flex items-center justify-between mb-8">
                 <div className="flex items-center gap-3 min-w-0">
-                  <div className="w-12 h-12 bg-slate-900 rounded-full flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-gray-900 rounded-full flex items-center justify-center flex-shrink-0">
                     <span className="text-white text-xl font-bold">{candidate.letter}</span>
                   </div>
                   {editingCandidateName === candidate.id ? (
@@ -875,37 +900,37 @@ function App() {
                         type="text"
                         value={editName}
                         onChange={(e) => setEditName(e.target.value)}
-                        className="px-2 py-1 rounded text-white bg-slate-800 font-semibold text-lg min-w-0"
+                        className="px-2 py-1 rounded text-gray-900 font-semibold text-lg min-w-0"
                         onKeyPress={(e) => e.key === 'Enter' && saveCandidateName(candidate.id)}
                         autoFocus
                       />
                       <button
                         onClick={() => saveCandidateName(candidate.id)}
-                        className="px-2 py-1 bg-purple-600 text-white rounded text-sm font-medium hover:bg-purple-700 transition-colors flex-shrink-0"
+                        className="px-2 py-1 bg-gray-900 text-white rounded text-sm font-medium hover:bg-gray-800 transition-colors flex-shrink-0"
                       >
                         Save
                       </button>
                       <button
                         onClick={() => setEditingCandidateName(null)}
-                        className="px-2 py-1 bg-slate-700 text-white rounded text-sm font-medium hover:bg-slate-600 transition-colors flex-shrink-0"
+                        className="px-2 py-1 bg-gray-700 text-white rounded text-sm font-medium hover:bg-gray-600 transition-colors flex-shrink-0"
                       >
                         Cancel
                       </button>
                     </div>
                   ) : (
-                    <span className="text-white text-xl font-semibold truncate">{candidate.name}</span>
+                    <span className="text-gray-900 text-xl font-semibold truncate">{candidate.name}</span>
                   )}
                 </div>
                 <button
                   onClick={() => startEditName(candidate.id, candidate.name)}
-                  className="p-2 hover:bg-white/10 rounded-full transition-colors flex-shrink-0"
+                  className="p-2 hover:bg-black/10 rounded-full transition-colors flex-shrink-0"
                 >
-                  <Pencil className="w-5 h-5 text-white" />
+                  <Pencil className="w-5 h-5 text-gray-900" />
                 </button>
               </div>
 
               <div className="text-center mb-8">
-                <div className="text-white text-sm font-medium mb-2">
+                <div className="text-gray-800 text-sm font-medium mb-2">
                   Total
                 </div>
                 {editingCandidateScore === candidate.id ? (
@@ -914,20 +939,20 @@ function App() {
                       type="number"
                       value={editScore}
                       onChange={(e) => setEditScore(e.target.value)}
-                      className="px-3 py-2 rounded text-white bg-slate-800 font-bold text-3xl w-32 text-center"
+                      className="px-3 py-2 rounded text-gray-900 font-bold text-3xl w-32 text-center"
                       onKeyPress={(e) => e.key === 'Enter' && saveCandidateScore(candidate.id)}
                       autoFocus
                     />
                     <div className="flex gap-2">
                       <button
                         onClick={() => saveCandidateScore(candidate.id)}
-                        className="px-3 py-1 bg-purple-600 text-white rounded text-sm font-medium hover:bg-purple-700 transition-colors"
+                        className="px-3 py-1 bg-gray-900 text-white rounded text-sm font-medium hover:bg-gray-800 transition-colors"
                       >
                         Save
                       </button>
                       <button
                         onClick={() => setEditingCandidateScore(null)}
-                        className="px-3 py-1 bg-slate-700 text-white rounded text-sm font-medium hover:bg-slate-600 transition-colors"
+                        className="px-3 py-1 bg-gray-700 text-white rounded text-sm font-medium hover:bg-gray-600 transition-colors"
                       >
                         Cancel
                       </button>
@@ -935,12 +960,12 @@ function App() {
                   </div>
                 ) : (
                   <div className="flex items-center justify-center gap-3">
-                    <span className="text-7xl font-bold text-white">{getCandidateScore(candidate.id)}</span>
+                    <span className="text-7xl font-bold text-gray-900">{getCandidateScore(candidate.id)}</span>
                     <button
                       onClick={() => startEditScore(candidate.id)}
-                      className="p-2 hover:bg-white/10 rounded-full transition-colors"
+                      className="p-2 hover:bg-black/10 rounded-full transition-colors"
                     >
-                      <Pencil className="w-6 h-6 text-white" />
+                      <Pencil className="w-6 h-6 text-gray-900" />
                     </button>
                   </div>
                 )}
@@ -951,7 +976,7 @@ function App() {
                   <button
                     key={points}
                     onClick={() => addScore(candidate.id, points)}
-                    className="w-14 h-14 border-2 border-white rounded-full font-semibold text-white hover:bg-white/10 transition-all hover:scale-110 active:scale-95"
+                    className="w-14 h-14 border-2 border-gray-900 rounded-full font-semibold text-gray-900 hover:bg-black/10 transition-all hover:scale-110 active:scale-95"
                   >
                     +{points}
                   </button>
@@ -959,23 +984,25 @@ function App() {
               </div>
               <button
                 onClick={() => deleteCandidate(candidate.id)}
-                className="mt-4 w-full py-1 text-xs bg-red-500/20 text-red-300 rounded font-medium hover:bg-red-500/30 transition-all"
+                className="mt-4 w-full py-1 text-xs bg-gradient-to-r from-red-100 to-orange-100 text-red-700 rounded font-medium hover:from-red-200 hover:to-orange-200 transition-all"
               >
                 Remove
               </button>
             </div>
             );
           })}
-            </div>
-            {candidates.length > 0 && (
-              <div className="text-center">
-                <p className="text-2xl font-semibold text-white">
-                  Total Score Across All Candidates: {totalScore}
-                </p>
-              </div>
-            )}
-          </>
-        ) : null}
+                </div>
+                {candidates.length > 0 && (
+                  <div className="text-center bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl p-6 shadow-md">
+                    <p className="text-2xl font-semibold text-gray-900">
+                      Total Score Across All Candidates: {totalScore}
+                    </p>
+                  </div>
+                )}
+              </>
+            ) : null}
+          </div>
+        </div>
       </div>
     </div>
   );
